@@ -1,3 +1,10 @@
-Toronto – Paris, 800
-Toronto – Chicago, 900
-London – Delhi, 1200
+Toronto - New York, 250.00
+Toronto - London, 400.00
+Montreal - Paris, 450.00
+Vancouver - Sydney, 800.00
+Calgary - Tokyo, 700.00
+Toronto - Los Angeles, 300.00
+Vancouver - Beijing, 850.00
+Montreal - Rome, 600.00
+Calgary - Seoul, 900.00
+Toronto - Sao Paulo, 950.00

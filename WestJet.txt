@@ -1,0 +1,11 @@
+American Airlines
+Chicago - Miami, 300.00
+New York - Los Angeles, 350.00
+Miami - New York, 280.00
+Dallas - Houston, 200.00
+Los Angeles - San Francisco, 150.00
+Boston - Washington, 180.00
+Seattle - Denver, 220.00
+Atlanta - Orlando, 180.00
+Las Vegas - New York, 400.00
+Phoenix - Chicago, 350.00
