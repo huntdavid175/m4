@@ -56,17 +56,20 @@ int main(void)
         return -1;
     }
 
+    // Read indivial airline files implementation
     int totalCount = 0;
 
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 3; i++)
     {
         printf("%s ", flightsArray[i]);
         processFlight(flightsArray[i], flightsData, &totalCount);
     }
 
+    printf("%d\n", totalCount);
     return 0;
 }
 
+// processFlight function
 int processFlight(char *fileName, struct AirlineFlights *flightData, int *totalCount)
 {
     FILE *airlineFIle = NULL;
@@ -93,11 +96,20 @@ int processFlight(char *fileName, struct AirlineFlights *flightData, int *totalC
         currentLine[strcspn(currentLine, "\n")] = '\0';
 
         parseLine(currentLine, source, destination, &fare);
+
+        (*totalCount)++;
+    }
+
+    int fileClose = fclose(airlineFIle);
+    if (fileClose != 0)
+    {
+        printf("Coulnd't close file");
     }
 
     return 0;
 }
 
+// parseLine function
 int parseLine(char *line, char *source, char *destination, double *fare)
 {
     sscanf(line, "%[^-] - %[^,], %lf", source, destination, fare);

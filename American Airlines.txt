@@ -1,10 +1,10 @@
-Los Angeles - Vancouver, 200.00
+LosAngeles - Vancouver, 200.00
 New York - Toronto, 150.00
 Vancouver - Cancun, 300.00
-Chicago - Las Vegas, 250.00
+Chicago - LasVegas, 250.00
 Miami - Orlando, 100.00
 Calgary - Edmonton, 80.00
 Toronto - Halifax, 180.00
-Montreal - Quebec City, 120.00
+Montreal - QuebecCity, 120.00
 Vancouver - Honolulu, 400.00
 Las Vegas - Phoenix, 150.00
