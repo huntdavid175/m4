@@ -12,15 +12,13 @@ struct AirlineFlights
 
 void displayLeastFareDetails();
 
-int processFlight(char *fileName[], struct AirlineFlights *flightData[], int *totalCount);
+int processFlight(char *fileName, struct AirlineFlights *flightData, int *totalCount);
 
-int parseLine(char *line, char *source, char *destination, int *fare);
+int parseLine(char *line, char *source, char *destination, double *fare);
 
 int main(void)
 {
     FILE *flightsFile = NULL;
-
-    FILE *airlineFile = NULL;
 
     char fileName[100];
     char flightsArray[100][50];
@@ -58,36 +56,52 @@ int main(void)
         return -1;
     }
 
-    // Code to create files (Not related to assignment tho)
-    // for (int i = 0; i < flightCounter; i++)
-    // {
-    //     strcat(flightsArray[i], ".txt");
-    //     airlineFile = fopen(flightsArray[i], "w");
-    //     int writeFile = fprintf(airlineFile, "%s", flightsArray[i]);
+    int totalCount = 0;
 
-    //     if (writeFile < 0)
-    //     {
-    //         printf("Counldn't write to file");
-    //         return -1;
-    //     }
-
-    //     int closeFile = fclose(airlineFile);
-    //     if (closeFile != 0)
-    //     {
-    //         printf("Couldn't close file");
-    //         return -1;
-    //     }
-
-    //     printf("Airline: %s\n", flightsArray[i]);
-    // }
+    for (int i = 0; i < 10; i++)
+    {
+        printf("%s ", flightsArray[i]);
+        processFlight(flightsArray[i], flightsData, &totalCount);
+    }
 
     return 0;
 }
 
-int processFlight(char *fileName[], struct AirlineFlights *flightData[], int *totalCount)
+int processFlight(char *fileName, struct AirlineFlights *flightData, int *totalCount)
 {
+    FILE *airlineFIle = NULL;
+    char currentLine[50] = "";
+    char source[20] = "";
+    char destination[20] = "";
+    double fare = 0;
+    char filePath[50] = "";
+
+    strcpy(filePath, fileName);
+
+    strcat(filePath, ".txt");
+
+    airlineFIle = fopen(filePath, "r");
+
+    if (airlineFIle == NULL)
+    {
+        printf("Couldn't open file");
+        return -1;
+    }
+
+    while (fgets(currentLine, 50, airlineFIle) != NULL && *totalCount < 100)
+    {
+        currentLine[strcspn(currentLine, "\n")] = '\0';
+
+        parseLine(currentLine, source, destination, &fare);
+    }
+
+    return 0;
 }
 
-int parseLine(char *line, char *source, char *destination, int *fare)
+int parseLine(char *line, char *source, char *destination, double *fare)
 {
+    sscanf(line, "%[^-] - %[^,], %lf", source, destination, fare);
+
+    printf("Source:%s, Destination: %s, Fare: %lf \n", source, destination, *fare);
+    return 0;
 }
