@@ -14,6 +14,8 @@ void displayLeastFareDetails();
 
 int processFlight(char *fileName[], struct AirlineFlights *flightData[], int *totalCount);
 
+int parseLine(char *line, char *source, char *destination, int *fare);
+
 int main(void)
 {
     FILE *flightsFile = NULL;
@@ -83,5 +85,9 @@ int main(void)
 }
 
 int processFlight(char *fileName[], struct AirlineFlights *flightData[], int *totalCount)
+{
+}
+
+int parseLine(char *line, char *source, char *destination, int *fare)
 {
 }
