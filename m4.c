@@ -2,8 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-void displayLeastFareDetails();
-
 struct AirlineFlights
 {
     char airlineName[50];
@@ -11,6 +9,10 @@ struct AirlineFlights
     char flightDestination[50];
     double flightFee;
 };
+
+void displayLeastFareDetails();
+
+int processFlight(char *fileName[], struct AirlineFlights *flightData[], int *totalCount);
 
 int main(void)
 {
@@ -78,4 +80,8 @@ int main(void)
     // }
 
     return 0;
+}
+
+int processFlight(char *fileName[], struct AirlineFlights *flightData[], int *totalCount)
+{
 }
