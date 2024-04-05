@@ -5,6 +5,7 @@
 struct AirlineFlight
 {
 
+    char airlineName[50];
     char flightSource[50];
     char flightDestination[50];
     double flightFee;
@@ -20,14 +21,16 @@ int checkTextForCharacter(char text[], char character);
 
 int checkTextForComma(char text[]);
 
+int findLowestFare(struct AirlineFlight *flightDataArray);
+
 int main(void)
 {
     FILE *flightsFile = NULL;
 
-    char fileName[100];
-    char flightsArray[100][50];
+    char fileName[100] = "";
+    char flightsArray[100][50] = {""};
 
-    struct AirlineFlight flightsDataArray[100];
+    struct AirlineFlight flightsDataArray[100] = {};
 
     int flightCounter = 0;
 
@@ -68,6 +71,8 @@ int main(void)
         // printf("%s ", flightsArray[i]);
         processFlight(flightsArray[i], flightsDataArray, &totalCount);
     }
+
+    findLowestFare(flightsDataArray);
 
     return 0;
 }
@@ -117,11 +122,12 @@ int processFlight(char fileName[40], struct AirlineFlight *flightDataArray, int 
         parseLine(currentLine, source, destination, &fare);
 
         // Add to struct array the name of the source, destination and  fare
+        strcpy(flightDataArray[*totalCount].airlineName, fileName);
         strcpy(flightDataArray[*totalCount].flightSource, source);
         strcpy(flightDataArray[*totalCount].flightDestination, destination);
         flightDataArray[*totalCount].flightFee = fare;
 
-        printf("Struct Source: %s, Struct Destination: %s, Struct fare: %.2lf\n", flightDataArray[*totalCount].flightSource, flightDataArray[*totalCount].flightDestination, flightDataArray[*totalCount].flightFee);
+        // printf("%s : %s to %s, fare $%.2lf\n", flightDataArray[*totalCount].airlineName, flightDataArray[*totalCount].flightSource, flightDataArray[*totalCount].flightDestination, flightDataArray[*totalCount].flightFee);
         // printf("Source:%s, Destination: %s, Fare: %lf \n", source, destination, fare);
         (*totalCount)++;
     }
@@ -156,4 +162,48 @@ int checkTextForCharacter(char text[], char character)
         }
     }
     return characterCount;
+}
+
+int findLowestFare(struct AirlineFlight *flightDataArray)
+{
+    int index = 0;
+    int repeatFlights = 0;
+    double minimumFare = 0;
+    char joinedName[50] = "";
+    char tempJoinedName[50] = "";
+
+    for (int i = index; i < 20; i++)
+    {
+        strcpy(joinedName, flightDataArray[i].flightSource);
+        strcat(joinedName, flightDataArray[i].flightDestination);
+
+        minimumFare = flightDataArray[i].flightFee;
+
+        for (int j = i + 1; j < 20; j++)
+        {
+            strcpy(tempJoinedName, flightDataArray[j].flightSource);
+            strcat(tempJoinedName, flightDataArray[j].flightDestination);
+            if (strcmp(joinedName, tempJoinedName) == 0)
+            {
+                repeatFlights += 1;
+
+                if (flightDataArray[j].flightFee < minimumFare)
+                {
+                    index = j;
+                    minimumFare = flightDataArray[j].flightFee;
+                }
+            }
+        }
+        if (repeatFlights < 1)
+        {
+            // printf("%s: %s to %s, fare $%.2flf\n", flightDataArray[i].airlineName, flightDataArray[i].flightSource, flightDataArray[i].flightDestination, flightDataArray[i].flightFee);
+        }
+        else
+        {
+            printf("%s: %s to %s, fare $%.2f\n", flightDataArray[index].airlineName, flightDataArray[index].flightSource, flightDataArray[index].flightDestination, flightDataArray[index].flightFee);
+        }
+        repeatFlights = 0;
+        index = 0;
+    }
+    return 2;
 }
