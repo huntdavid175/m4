@@ -1,0 +1,7 @@
+[
+  { "source": "Tokyo", "destination": "London", "fare": "10" },
+  { "source": "Toronto", "destination": "Calgary", "fare": "40" },
+  { "source": "Vancouver", "destination": "Edmonton", "fare": "40" },
+  { "source": "Tokyo", "destination": "London", "fare": "30" },
+  { "source": "Toronto", "destination": "Calgary", "fare": "20" }
+]

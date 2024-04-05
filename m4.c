@@ -2,9 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-struct AirlineFlights
+struct AirlineFlight
 {
-    char airlineName[50];
+
     char flightSource[50];
     char flightDestination[50];
     double flightFee;
@@ -12,9 +12,13 @@ struct AirlineFlights
 
 void displayLeastFareDetails();
 
-int processFlight(char *fileName, struct AirlineFlights *flightData, int *totalCount);
+int processFlight(char fileName[40], struct AirlineFlight *flightDataArray, int *totalCount);
 
 int parseLine(char *line, char *source, char *destination, double *fare);
+
+int checkTextForCharacter(char text[], char character);
+
+int checkTextForComma(char text[]);
 
 int main(void)
 {
@@ -23,7 +27,7 @@ int main(void)
     char fileName[100];
     char flightsArray[100][50];
 
-    struct AirlineFlights flightsData[100];
+    struct AirlineFlight flightsDataArray[100];
 
     int flightCounter = 0;
 
@@ -45,7 +49,7 @@ int main(void)
 
         strcpy(flightsArray[flightCounter], airline);
 
-        printf("%s\n", airline);
+        // printf("%s\n", airline);
         flightCounter++;
     }
 
@@ -61,49 +65,71 @@ int main(void)
 
     for (int i = 0; i < 3; i++)
     {
-        printf("%s ", flightsArray[i]);
-        processFlight(flightsArray[i], flightsData, &totalCount);
+        // printf("%s ", flightsArray[i]);
+        processFlight(flightsArray[i], flightsDataArray, &totalCount);
     }
 
-    printf("%d\n", totalCount);
     return 0;
 }
 
 // processFlight function
-int processFlight(char *fileName, struct AirlineFlights *flightData, int *totalCount)
+int processFlight(char fileName[40], struct AirlineFlight *flightDataArray, int *totalCount)
 {
-    FILE *airlineFIle = NULL;
+    FILE *airlineFile = NULL;
     char currentLine[50] = "";
-    char source[20] = "";
-    char destination[20] = "";
-    double fare = 0;
+    char source[50] = "";
+    char destination[50] = "";
+    double fare = 0.00;
     char filePath[50] = "";
 
     strcpy(filePath, fileName);
 
     strcat(filePath, ".txt");
 
-    airlineFIle = fopen(filePath, "r");
+    airlineFile = fopen(filePath, "r");
 
-    if (airlineFIle == NULL)
+    if (airlineFile == NULL)
     {
         printf("Couldn't open file");
         return -1;
     }
 
-    while (fgets(currentLine, 50, airlineFIle) != NULL && *totalCount < 100)
+    while (fgets(currentLine, 50, airlineFile) != NULL && *totalCount < 100)
     {
         currentLine[strcspn(currentLine, "\n")] = '\0';
 
+        /* Check for dash in text*/
+        if (checkTextForCharacter(currentLine, '-') < 1)
+        {
+            printf("Missing dash in %s\n", currentLine);
+            continue;
+        }
+
+        /*Check for comma in text*/
+
+        if (checkTextForCharacter(currentLine, ',') < 1)
+        {
+            printf("Missing comma in %s\n", currentLine);
+            continue;
+        }
+
+        /*Parse line*/
         parseLine(currentLine, source, destination, &fare);
 
+        // Add to struct array the name of the source, destination and  fare
+        strcpy(flightDataArray[*totalCount].flightSource, source);
+        strcpy(flightDataArray[*totalCount].flightDestination, destination);
+        flightDataArray[*totalCount].flightFee = fare;
+
+        printf("Struct Source: %s, Struct Destination: %s, Struct fare: %.2lf\n", flightDataArray[*totalCount].flightSource, flightDataArray[*totalCount].flightDestination, flightDataArray[*totalCount].flightFee);
+        // printf("Source:%s, Destination: %s, Fare: %lf \n", source, destination, fare);
         (*totalCount)++;
     }
 
-    int fileClose = fclose(airlineFIle);
+    int fileClose = fclose(airlineFile);
     if (fileClose != 0)
     {
-        printf("Coulnd't close file");
+        printf("Couldn't close file");
     }
 
     return 0;
@@ -114,6 +140,20 @@ int parseLine(char *line, char *source, char *destination, double *fare)
 {
     sscanf(line, "%[^-] - %[^,], %lf", source, destination, fare);
 
-    printf("Source:%s, Destination: %s, Fare: %lf \n", source, destination, *fare);
+    // printf("Source:%s, Destination: %s, Fare: %lf \n", source, destination, *fare);
+
     return 0;
+}
+
+int checkTextForCharacter(char text[], char character)
+{
+    int characterCount = 0;
+    for (int i = 0; i < strlen(text); i++)
+    {
+        if (text[i] == character)
+        {
+            characterCount++;
+        }
+    }
+    return characterCount;
 }

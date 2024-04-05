@@ -1,9 +1,9 @@
-Toronto - NewYork, 250.00
+Toronto  NewYork, 250.00
 Toronto - London, 400.00
 Montreal - Paris, 450.00
 Vancouver - Sydney, 800.00
 Montreal - Paris, 700.00
-Toronto - LosAngeles, 300.00
+Toronto - LosAngeles 300.00
 Vancouver - Beijing, 850.00
 Montreal - Rome, 600.00
 Toronto - London, 900.00
